@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programme QR</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>body{font:16px system-ui;background:#f4ebdf;color:#0b1f3f;text-align:center;padding:24px}img{width:260px;height:260px;background:#fff;border-radius:16px;padding:10px}input{width:100%;max-width:420px;padding:11px;border:1px solid #d9c8ae;border-radius:10px;font:inherit}button{background:#0b1f3f;color:#e3c37d;border:0;border-radius:10px;padding:11px 18px;font-weight:700;margin:6px}</style></head><body>
+<h2>Programme QR code</h2><input id="u"><p><img id="q" alt="QR"></p><button onclick="dl('png')">Download PNG</button><button onclick="dl('svg')">Download SVG</button>
+<script>
+const u=document.getElementById('u'),q=document.getElementById('q');u.value=location.href.replace(/qr\.html.*$/,'');
+function svg(){const k=qrcode(0,'H');k.addData(u.value);k.make();const n=k.getModuleCount(),M=4;let d='';for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(k.isDark(r,c))d+=`M${c+M} ${r+M}h1v1h-1z`;
+return`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n+2*M} ${n+2*M}" width="1024" height="1024"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#0b1f3f"/></svg>`}
+function draw(){q.src='data:image/svg+xml;utf8,'+encodeURIComponent(svg())}u.oninput=draw;draw();
+function dl(t){const a=document.createElement('a');a.download='programme-qr.'+t;if(t=='svg'){a.href=URL.createObjectURL(new Blob([svg()],{type:'image/svg+xml'}));a.click()}else{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=c.height=1200;c.getContext('2d').drawImage(i,0,0,1200,1200);a.href=c.toDataURL('image/png');a.click()};i.src=q.src}}
+</script></body></html>
