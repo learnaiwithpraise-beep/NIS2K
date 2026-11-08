@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NIS 20th Presentable Course · Beyond the Uniform</title><meta name="theme-color" content="#0b1f3f">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Lato:wght@400;700&display=swap">
+<style>
+:root{--navy:#0b1f3f;--gold:#b8893a;--gold2:#e3c37d;--cream:#fbf1e4;--ink:#1c2740;box-sizing:border-box}
+*{box-sizing:inherit}html{scroll-behavior:smooth;scroll-padding-top:60px}
+body{margin:0;font:16px/1.6 Lato,system-ui,sans-serif;color:var(--ink);background:linear-gradient(#fbf1e4,#f6e3cf);padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;color:var(--navy);margin:0}
+nav{position:sticky;top:0;z-index:9;background:rgba(11,31,63,.96);padding:env(safe-area-inset-top) 0 0;overflow-x:auto;white-space:nowrap;display:flex;gap:4px;justify-content:center}
+nav a{color:var(--gold2);text-decoration:none;padding:14px 14px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.hero{text-align:center;padding:48px 20px 40px;max-width:900px;margin:auto}
+.org{letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--navy);font-size:clamp(14px,3.4vw,22px);font-family:'Playfair Display',serif}
+.big{font-size:clamp(46px,13vw,108px);line-height:1;margin:18px 0 4px;font-weight:800}
+.tag{color:var(--gold);font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(20px,5vw,36px);letter-spacing:.06em;text-transform:uppercase}
+.motto{letter-spacing:.3em;font-size:11px;text-transform:uppercase;font-weight:700;margin-top:8px}
+.date{display:inline-block;margin-top:22px;padding:10px 24px;border:1px solid var(--gold);border-radius:99px;font-weight:700;color:var(--navy);letter-spacing:.08em}
+.cd{display:flex;gap:10px;justify-content:center;margin-top:22px}.cd div{background:var(--navy);color:var(--gold2);border-radius:14px;padding:10px 0;width:70px;font-size:11px;text-transform:uppercase;letter-spacing:.1em}
+.cd b{display:block;font:800 26px 'Playfair Display',serif;color:#fff}
+section{max-width:900px;margin:auto;padding:36px 20px}
+h2{font-size:clamp(26px,6vw,36px);text-align:center;margin-bottom:6px}h2:after{content:"";display:block;width:60px;height:2px;background:var(--gold);margin:10px auto 22px}
+.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 24px rgba(11,31,63,.08);border:1px solid #f0dcc2}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
+.tabs button{flex:1;min-width:130px;border:0;border-radius:14px;padding:12px 10px;background:#fff;color:var(--navy);font:700 13px Lato;cursor:pointer;border:1px solid #f0dcc2}
+.tabs button.on{background:var(--navy);color:var(--gold2)}
+.item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f0e4d2}.item:last-child{border:0}
+.time{min-width:64px;font-weight:700;color:var(--gold)}.item h3{font-size:18px}.item p{margin:2px 0 0;font-size:14px;opacity:.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.person{text-align:center}.av{position:relative;overflow:hidden;width:112px;height:112px;border-radius:50%;margin:0 auto 10px;background:var(--navy) center/cover;border:3px solid var(--gold2);display:grid;place-items:center;color:var(--gold2);font:800 30px 'Playfair Display'}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;cursor:zoom-in}
+iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:18px;margin-top:14px}
+.btn{display:inline-block;background:var(--navy);color:var(--gold2);padding:12px 22px;border-radius:99px;text-decoration:none;font-weight:700;margin:4px}
+.ctr{text-align:center}footer{text-align:center;padding:30px 20px 40px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#7a6a55}
+#lb{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:20}#lb img{max-width:94%;max-height:90%;border-radius:10px}
+.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}</style></head><body>
+<nav id="nav"></nav><div id="app"><p style="text-align:center;padding:60px">Loading…</p></div>
+<div id="lb" onclick="this.style.display='none'"><img alt=""></div>
+<script>
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rows=t=>(t||'').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>l.split('|').map(x=>x.trim()));
+const safe=u=>/^(https?:\/\/|\/files\/|[\w-]+\/[\w.-]+\.(jpe?g|png|webp))/i.test(u||'')?u:'';
+fetch('content.json').then(r=>r.json()).then(c=>{
+ const days=rows(c.days),sch=rows(c.schedule),ppl=rows(c.people),news=rows(c.news),gal=rows(c.gallery).map(r=>r[0]).filter(safe);
+ const links=[['about','About'],['schedule','Schedule']];
+ let h=`<div class="hero"><div class="org">${e(c.org)}<br>${e(c.title)}</div><h1 class="big">${e(c.subtitle)}</h1><div class="tag">${e(c.tagline)}</div><div class="motto">${e(c.motto)}</div><div class="date">${e(c.dates)}</div><div class="cd" id="cd"></div></div>
+ <section id="about"><h2>About the Programme</h2><div class="card"><p style="margin:0;white-space:pre-line">${e(c.description)}</p></div></section>
+ <section id="schedule"><h2>Programme Schedule</h2><div class="tabs">${days.map((d,i)=>`<button data-i="${i}" class="${i?'':'on'}">${e(d[0])}</button>`).join('')}</div><div class="card" id="day"></div></section>`;
+ if(ppl.length){links.push(['people','People']);h+=`<section id="people"><h2>Speakers &amp; Organisers</h2><div class="grid">${ppl.map(p=>`<div class="card person"><div class="av">${e(p[0].split(' ').pop()[0])}${safe(p[2])?`<img src="${e(p[2])}" alt="" onerror="this.remove()">`:''}</div><h3>${e(p[0])}</h3><div>${e(p[1])}</div></div>`).join('')}</div></section>`}
+ if(news.length){links.push(['news','News']);h+=`<section id="news"><h2>Announcements</h2>${news.map(n=>`<div class="card" style="margin-bottom:12px"><h3>${e(n[0])}</h3><p style="margin:6px 0 0">${e(n[1])}</p></div>`).join('')}</section>`}
+ if(gal.length||c.videoUrl){links.push(['media','Media']);h+=`<section id="media"><h2>Gallery &amp; Video</h2><div class="gal">${gal.map(g=>`<img loading="lazy" src="${e(g)}" alt="Programme photo">`).join('')}</div>${/^https:\/\/(www\.)?youtube(-nocookie)?\.com\/embed\//.test(c.videoUrl||'')?`<iframe src="${e(c.videoUrl)}" allowfullscreen title="Video"></iframe>`:''}</section>`}
+ links.push(['venue','Venue'],['contact','Contact']);
+ h+=`<section id="venue"><h2>Date &amp; Venue</h2><div class="card ctr"><h3>${e(c.dates)}</h3><p style="margin:6px 0"><b>${e(c.venueName)}</b><br>${e(c.venueAddress)}</p>${safe(c.mapUrl)?`<a class="btn" href="${e(c.mapUrl)}" target="_blank" rel="noopener">Get Directions</a>`:''}</div></section>
+ <section id="contact"><h2>Contact</h2><div class="card ctr">${c.phone?`<a class="btn" href="tel:${e(c.phone)}">Call ${e(c.phone)}</a>`:''}${c.whatsapp?`<a class="btn" href="https://wa.me/${e(c.whatsapp.replace(/\D/g,''))}">WhatsApp</a>`:''}${c.email?`<a class="btn" href="mailto:${e(c.email)}">Email</a>`:''}${c.phone||c.whatsapp||c.email?'':'<p>Contact details coming soon.</p>'}</div></section>
+ <footer>${e(c.org)} · ${e(c.tagline)}</footer>`;
+ app.innerHTML=h;nav.innerHTML=links.map(l=>`<a href="#${l[0]}">${l[1]}</a>`).join('');
+ const show=i=>{day.innerHTML=days[i]?`<h3 style="text-align:center;margin-bottom:6px">${e(days[i][1])}</h3>`+sch.filter(r=>r[0]==i+1).map(r=>`<div class="item"><div class="time">${e(r[1])}</div><div><h3>${e(r[2])}</h3><p>${e(r[3])}</p></div></div>`).join(''):''};show(0);
+ document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');show(+b.dataset.i)});
+ document.querySelectorAll('.gal img').forEach(i=>i.onclick=()=>{lb.querySelector('img').src=i.src;lb.style.display='grid'});
+ const t=new Date(c.startISO).getTime(),tick=()=>{let d=Math.max(0,t-Date.now())/1e3;if(isNaN(t)||d<=0){cd.innerHTML='';return}
+  cd.innerHTML=[['Days',86400],['Hrs',3600],['Min',60],['Sec',1]].map(([n,s])=>{const v=Math.floor(d/s);d-=v*s;return`<div><b>${v}</b>${n}</div>`}).join('')};tick();setInterval(tick,1000);
+}).catch(()=>app.innerHTML='<p style="text-align:center;padding:60px">Could not load. Please refresh.</p>');
+</script></body></html>
